@@ -23,6 +23,7 @@
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@types/jest": "^26.0.24",
+    "@types/jquery": "^3.5.29",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^10.4.7",
