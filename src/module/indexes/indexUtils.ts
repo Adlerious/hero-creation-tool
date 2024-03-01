@@ -18,14 +18,20 @@ export async function buildSourceIndexes() {
       const fieldsToIndex = new Set<string>();
 
       // name added by default on all when indexed
-      addRaceFields(fieldsToIndex, sourcePacks, name);
-      addRacialFeaturesFields(fieldsToIndex, sourcePacks, name);
+      addHeritageFields(fieldsToIndex, sourcePacks, name);
+      addHeritageFeaturesFields(fieldsToIndex, sourcePacks, name);
+      addBackgroundFields(fieldsToIndex, sourcePacks, name);
+      addBackgroundFeaturesFields(fieldsToIndex, sourcePacks, name);
+      addCultureFields(fieldsToIndex, sourcePacks, name);
+      addCultureFeaturesFields(fieldsToIndex, sourcePacks, name);
+      addDestinyFields(fieldsToIndex, sourcePacks, name);
+      addDestinyFeaturesFields(fieldsToIndex, sourcePacks, name);
       addClassFields(fieldsToIndex, sourcePacks, name);
-      // addClassFeaturesFields(fieldsToIndex, sourcePacks, name);
-      addSubclassFields(fieldsToIndex, sourcePacks, name);
+      addClassFeaturesFields(fieldsToIndex, sourcePacks, name);
+      addArchetypeFields(fieldsToIndex, sourcePacks, name);
       addSpellFields(fieldsToIndex, sourcePacks, name);
       addFeatFields(fieldsToIndex, sourcePacks, name);
-      addBackgroundFields(fieldsToIndex, sourcePacks, name);
+      addManeuversFields(fieldsToIndex, sourcePacks, name);
       addEquipmentFields(fieldsToIndex, sourcePacks, name);
 
       if (fieldsToIndex.size) {
@@ -190,40 +196,40 @@ export type EntryScaleValueAdvancement = EntryAdvancement & {
   };
 };
 
-// Race
-export type RaceEntry = IndexEntry & {
+// Heritage
+export type HeritageEntry = IndexEntry & {
   system: {
     requirements: string;
     description: { value: string };
   };
 };
-export function addRaceFields(fieldsToIndex: Set<string>, source: Source, packName: string) {
-  if (source[SourceType.RACES].includes(packName)) {
-    fieldsToIndex.add('system.requirements'); // for figuring subraces
+export function addHeritageFields(fieldsToIndex: Set<string>, source: Source, packName: string) {
+  if (source[SourceType.HERITAGES].includes(packName)) {
+    fieldsToIndex.add('system.requirements'); // for figuring subheritagees
     fieldsToIndex.add('system.description.value'); // for sidebar
   }
 }
-export async function getRaceEntries() {
-  const raceEntries = await (getIndexEntriesForSource(SourceType.RACES) as unknown as Promise<RaceEntry[]>);
-  // sanitize entries to remove anything nonconforming to a Feature (for now, until Race becomes a type)
-  return raceEntries.filter((r) => r.type == 'feat');
+export async function getHeritageEntries() {
+  const heritageEntries = await (getIndexEntriesForSource(SourceType.HERITAGES) as unknown as Promise<HeritageEntry[]>);
+  // sanitize entries to remove anything nonconforming to a Feature (for now, until Heritage becomes a type)
+  return heritageEntries.filter((r) => r.type == 'feat');
 }
 
-// Race Feature
-export type RacialFeatureEntry = IndexEntry & {
+// Heritage Feature
+export type HeritageFeatureEntry = IndexEntry & {
   system: { requirements: string };
 };
-export function addRacialFeaturesFields(fieldsToIndex: Set<string>, source: Source, packName: string) {
-  if (source[SourceType.RACIAL_FEATURES].includes(packName)) {
-    fieldsToIndex.add('system.requirements'); // for mapping racial features to races/subraces
+export function addHeritageFeaturesFields(fieldsToIndex: Set<string>, source: Source, packName: string) {
+  if (source[SourceType.HERITAGE_FEATURES].includes(packName)) {
+    fieldsToIndex.add('system.requirements'); // for mapping racial features to Heritages/subheritagees
   }
 }
-export async function getRaceFeatureEntries() {
-  const raceFeatureEntries = await (getIndexEntriesForSource(SourceType.RACIAL_FEATURES) as unknown as Promise<
-    RacialFeatureEntry[]
+export async function getHeritageFeatureEntries() {
+  const heritageFeatureEntries = await (getIndexEntriesForSource(SourceType.HERITAGE_FEATURES) as unknown as Promise<
+  HeritageFeatureEntry[]
   >);
-  // sanitize entries to remove anything nonconforming to a Feature (for now at least, if Race Features become a type in the future)
-  return raceFeatureEntries.filter((f) => f.type == 'feat' && f?.system?.requirements !== '');
+  // sanitize entries to remove anything nonconforming to a Feature (for now at least, if Heritage Features become a type in the future)
+  return heritageFeatureEntries.filter((f) => f.type == 'feat' && f?.system?.requirements !== '');
 }
 
 // Class

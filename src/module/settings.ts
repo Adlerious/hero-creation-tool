@@ -7,7 +7,6 @@ export const enum PrivateSettingKeys {
 }
 
 const enum SettingKeys {
-  USE_TOKENIZER = 'useTokenizer',
   TOKEN_BAR = 'displayBarsMode',
   TOKEN_NAME = 'displayNameMode',
   SHOW_ROLLS_AS_MESSAGES = 'showRolls',
@@ -17,24 +16,30 @@ const enum SettingKeys {
   ENABLE_ASI_MANUAL = 'enableAbilityScoreManualInput',
   INDIVIDUAL_PANEL_SCROLLS = 'individualScrolls',
   DEFAULT_GOLD_DICE = 'defaultGoldDice',
-  FIGHTING_STYLE_STRING = 'fightingStyleLookupString',
+  COMBAT_MANOUVERS_STRING = 'combatManuversLookupString', // fix spelling
   EQUIPMENTS_BLACKLIST = 'equipmentsBlackList',
-  SUBRACES_BLACKLIST = 'subracesBlacklist',
+  HERITAGE_FEATURES_BLACKLIST = 'heritageFeaturesBlacklist',
   BUTTON_ON_DIALOG = 'buttonOnDialog',
   POINT_BUY_LIMIT = 'pointBuyLimit',
   ABILITY_ROLL_FORMULA = 'abiiltyRollFormula',
   SOURCES = 'compendiumSources',
-  TRIM_SUBCLASSES = 'trimSubclasses',
 }
 export default SettingKeys;
 
 export const enum SourceType {
-  RACES = 'races',
-  RACIAL_FEATURES = 'racialFeatures',
+  HERITAGES = 'heritages',
+  HERITAGE_FEATURES = 'heritageFeatures',
+  BACKGROUNDS = 'backgrounds',
+  BACKGROUND_FEATURES = 'backgroundFeatures',
+  CULTURE = 'culture',
+  CULTURE_FEATURES = 'cultureFeatures',
+  DESTINY = 'backgrounds',
+  DESTINY_FEATURES = 'backgrounds',
+
   CLASSES = 'classes',
   CLASS_FEATURES = 'classFeatures',
   SUBCLASSES = 'subclasses',
-  BACKGROUNDS = 'backgrounds',
+  
   SPELLS = 'spells',
   FEATS = 'feats',
   ITEMS = 'items',
@@ -62,11 +67,7 @@ export function registerSettings(): void {
   equipmentBlacklist();
   subraceNameBlacklist();
   buttonOnDialogInsteadOfActorsDirectory();
-  trimSubclasses();
-  // custom packs
   sourcesConfiguration();
-  // integrations
-  useTokenizerIfAvailable();
   // private settings
   lastMigration();
 }
@@ -131,17 +132,6 @@ function defaultStartingGoldDice() {
     config: true,
     default: '5d4 * 10',
     type: String,
-  });
-}
-
-function useTokenizerIfAvailable() {
-  game.settings.register(MODULE_ID, SettingKeys.USE_TOKENIZER, {
-    name: game.i18n.localize('HCT.Setting.UseTokenizer.Name'),
-    hint: game.i18n.localize('HCT.Setting.UseTokenizer.Hint'),
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false,
   });
 }
 

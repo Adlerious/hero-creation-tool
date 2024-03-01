@@ -1,6 +1,3 @@
-/*
-  Functions used exclusively on the Race tab
-*/
 import { Step, StepEnum } from '../step';
 import * as Utils from '../utils';
 import * as ProficiencyUtils from '../proficiencyUtils';
